@@ -1,0 +1,162 @@
+\paragraph*{Прямая задача кинематики}$\phantom{-}$\\
+\hspace*{\parindent} Прямая задача кинематики (ПЗК) заключается в вычислении координат системы, связанной со схватом (рабочим инструментом), в зависимости от обобщенных координат манипулятора.
+Для решения ПЗК рассматриваются две системы координат: исходная, связанная с «землей» $o_0 x_0 y_0 z_0$ и итоговая, связанная с рабочим инструментом $o_n x_n y_n z_n$ . Как известно, расположение этих двух систем друг относительно друга определяется тремя линейными и тремя угловыми координатами. Другими словами, два набора координат одной и той же точки в пространстве, выраженные относительно этих двух систем, связаны некоторым преобразованием несущим информацию о линейном смещении и пространственной ориентации одной системы относительно другой.\\
+\hspace*{\parindent}Итак, рассмотрим подробнее два набора координат $k^0, k^n$ одной и той же точки в пространстве, выраженные относительно систем $o_0 x_0 y_0 z_0$ и $o_n x_n y_n z_n$ соответственно:
+$k^0 = T_n^0 k^n$, где $T_n^0$ - преобразование, несущее информацию о линейном смещении и пространственной ориентации одной системы относительно другой.\\
+\textit{Определение}: Матрица $T_n^0$, определяющая связь систем координат $o_0 x_0 y_0 z_0$ и $o_n x_n y_n z_n$ называется матрицей однородного преобразования и имеет вид:
+
+\begin{equation}\label{eq:model}
+T_n^0=
+    \begin{bmatrix}
+    n_x & s_x & a_x & p_x \\
+    n_y & s_y & a_y & p_y \\
+    n_z & s_z & a_z & p_z \\
+    0 & 0 & 0 & 1 \\
+    \end{bmatrix}
+    =
+     \begin{bmatrix}
+    n_n^0  &  s_n^0 & a_n^0 & p_n^0 \\
+    0 & 0 & 0 & 1\\
+    \end{bmatrix}
+     =
+     \begin{bmatrix}
+    R_n^0  &  p_n^0 \\
+     0 & 1\\
+    \end{bmatrix}
+    ,\\
+\end{equation} 
+
+\hspace*{\parindent} где векторы  $n_n^0$,  $s_n^0$ и $a_n^0$ выражают направления осей $x_n$, $y_n$ и $z_n$, О O соответственно, относительно системы координат $o_0 x_0 y_0 z_0$, $R_n^0$ \in SO - матрица вращения системы  $o_n x_n y_n z_n$ относительно $o_0 x_0 y_0 z_0$, $p_n^0$ \in $R^3$ - вектор линейного смещения начала координат системы  $o_n x_n y_n z_n$ относительно $o_0 x_0 y_0 z_0$.\\
+\hspace*{\parindent} матрица $T_n^0$ имеет размерность 4х4, значит нужно расширить векторы координат $v^0$ и $v^n$ единицей для соответствия размерностей в матричных уравнениях:\\
+\begin{equation}\label{eq:model}
+     \begin{bmatrix}
+     x^0 \\
+     y^0\\
+     z^0\\
+     1\\
+    \end{bmatrix}
+     =T_n^0
+     \begin{bmatrix}
+     x^n \\
+     y^n\\
+     z^n\\
+     1\\
+    \end{bmatrix}
+    .\\
+\end{equation} 
+\hspace*{\parindent} Рассмотрим самые важные свойства, характеристики и отдельные элементарные компоненты, которые будут активно использоваться в пособии.\\
+
+1. Поворот на нулевой угол определяется единичной матрицей\\
+\begin{equation}\label{eq:model}
+R_{\beta=0} = 
+     \begin{bmatrix}
+    1 & 0 & 0\\
+    0 & 1 & 0\\
+    0 & 0 & 1\\
+    \end{bmatrix}
+     =I
+\end{equation} 
+
+2. Поворот в отрицательном направлении определяется
+\begin{equation}\label{eq:model}
+R_{-\beta} = R_{\beta}^{-1} = R_{-\beta}^T
+\end{equation} 
+
+3. Существуют так называемые базовые матрицы вращения вокруг осей x, y и z:
+\begin{equation}\label{eq:model}
+R_{x, \beta} = 
+     \begin{bmatrix}
+    1 & 0 & 0\\
+    0 & cos\beta & -sin\beta\\
+    0 & sin\beta & cos\beta\\
+    \end{bmatrix}
+    , \\
+\end{equation} 
+
+\begin{equation}\label{eq:model}
+R_{y, \beta} = 
+     \begin{bmatrix}
+    cos\beta & 0 & sin\beta\\
+    0 & 1 & 0\\
+    -sin\beta & 0 & cos\beta\\
+    \end{bmatrix}
+    , \\
+\end{equation} 
+
+\begin{equation}\label{eq:model}
+R_{z, \beta} = 
+     \begin{bmatrix}
+   
+    cos\beta & -sin\beta & 0\\
+    sin\beta & cos\beta & 0\\
+    0 & 0 & 1\\
+    \end{bmatrix}
+    , \\
+\end{equation} 
+где $\beta$ - некоторый угол\\
+
+\hspace*{\parindent} Возвращаясь к методу Денавита-Хартенберга, напомним, что на предыдущем шаге были получены по четыре параметра для каждого звена манипулятора. Теперь из них необходимо построить соответствующие матрицы однородного преобразования следующим способом:\\
+\begin{equation}\label{eq:model}
+T_i = T_{z,{\theta_i}} T_{z,{d_i}} T_{x,{a_i}} T_{z,{\alpha_i}} = \\
+     \begin{bmatrix}
+      R_{z,{\theta_i}} & 0\\
+      0 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      I & p_{d_i}\\
+      0 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      I & p_{\alpha_i}\\
+      0 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+      R_{x,{\alpha_i}} & 0\\
+      0 & 1 \\
+    \end{bmatrix}
+    = \\
+     \begin{bmatrix}
+      c_{\theta_i} & -s_{\theta_i}c_{\alpha_i} & s_{\theta_i}s_{\alpha_i} & \alpha_i c_{\theta_i} \\
+      s_{\theta_i} & c_{\theta_i}c_{\alpha_i} & -c_{\theta_i}s_{\alpha_i} & \alpha_i s_{\theta_i} \\
+      0 & s_{\alpha_i} & c_{\alpha_i} & d_i\\
+      0 & 0 & 0 & 1\\
+    \end{bmatrix}
+    ,\\
+\end{equation} 
+где i - номер звена,  $R_{z,{\theta_i}}$ и $R_{x,{\alpha_i}}$  - базовые матрицы вращения (см. свойство №3):
+\begin{equation}\label{eq:model}
+R_{z, \theta_i} = 
+     \begin{bmatrix}
+    cos\theta_i & -sin\theta_i & 0\\
+    sin\theta_i & cos\theta_i & 0\\
+    0 & 0 & 1\\
+    \end{bmatrix}
+    , \\
+\end{equation} 
+
+\begin{equation}\label{eq:model}
+R_{x, \alpha_i} = 
+     \begin{bmatrix}
+    1 & 0 & 0\\
+    0 & cos\alpha_i & -sin\alpha_i\\
+    0 & sin\alpha_i & cos\alpha_i\\
+    \end{bmatrix}
+    , \\
+\end{equation} 
+где  $p_{d_i}$ и $p_{a_i}$ - векторы с ненулевыми компонентами $p_z= d_i$ и $p_x= a_i$, соответственно:
+
+\begin{equation}\label{eq:model}
+ p_{d_i} = 
+     \begin{bmatrix}
+   0\\
+   0\\
+   d_i\\
+    \end{bmatrix}
+, p_{a_i} =
+     \begin{bmatrix}
+   a_i\\
+   0\\
+   0\\
+    \end{bmatrix}
+\end{equation}
+Подставив все параметры Денавита-Хартенберга, получим n=3 матриц однородного преобразования:
