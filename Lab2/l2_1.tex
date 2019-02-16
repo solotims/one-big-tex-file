@@ -1,0 +1,124 @@
+\paragraph*{Математическая модель сочленения\\}
+\hspace*{\parindent} Одномерное управление вращательным сочленением фактически сводится к управлению двигателем постоянного тока с зубчатой передачей, динамическая модель которого содержит две составляющие: электрическую и механическую. Рассмотрим их математическое описание.
+
+Электрическая компонента, обусловленная электрической цепью из индуктивности, резистора и двигателя, определяется выражением:
+\begin{equation}\label{1}
+	L\dot{i}(t)+Ri(t)=u(t)-K_e\dot{\theta}(t),
+\end{equation}
+где $L, R, i(t), u(t)$ - индуктивность, сопротивление, сила тока и напряжение якоря, соответственно, $K_e$ - коэффициент противо-ЭДС, $\theta(t), \dot{\theta}(t) $ -  угловая скорость и угол поворота ротора, соответственно.
+
+Механическая  компонента,  обусловленная  зубчатой  передачей,определяется выражением:
+\begin{equation}\label{2}
+	 J_m\ddot{\theta}(t)+K_f\dot{\theta}(t)=K_mi(t) - \mu_l(t),
+\end{equation}
+где $J_m$ -  приведенный момент инерции, $K_f, K_m$ - коэффициент трения и коэффициент момента силы соответственно, $\mu_l(t) $ - момент нагрузки, $\ddot{\theta}(t) $ - угловое ускорение ротора.
+
+\paragraph*{Преобразование Лапласа и передаточная функция\\}
+\hspace*{\parindent} Преобразованием Лапласа функции вещественной переменной $f(t)$ называется функция $F(s)$ комплексной переменной $s=\sigma+i\omega$ такая, что:
+\begin{equation}
+	F(s) = \mathcal{L}\{f(t)\} = \int\limits_{0}^{\infty} e^{-st}f(t)dt.
+\end{equation}
+Функцию $f(t)$ называют оригиналом, а функцию $F(s)$ - изображением функции $f(t)$.
+
+Особенностью преобразования Лапласа является то, что многим соотношениям и операциям над оригиналами соответствуют более простые соотношения над их изображениями. 
+
+Например, изображением производной от оригинала является произведение изображения оригинала на $s$ за вычетом значения оригинала при $t=0$:
+\begin{equation}
+	\mathcal{L}\{f'(t)\} = sF(s) - f(0),
+\end{equation}
+а изображением интеграла от оригинала является изображение оригинала, деленное на $s$:
+\begin{equation}
+	\mathcal{L}\{\int_{0}^{x} f(t)dt\}=\frac{F(s)}{s}.
+\end{equation}
+Так же, преобразование Лапласа обладает свойством линейности:
+\begin{equation}
+	\mathcal{L}\{af(t)+bg(t)\}=aF(s)+bG(s).
+\end{equation}
+
+Передаточной функцией $W(s)$ называется отношение преобразования Лапласа выходного сигнала к преобразованию Лапласа входного сигнала при нулевых начальных условиях:
+\begin{equation}
+	W(s) = \frac{Y(s)}{U(s)}.
+\end{equation}
+
+Найдем передаточную функцию сочленения. Для этого, осуществим преобразование Лапласа функций \eqref{1} и \eqref{2}, выполним структурные преобразования и получим:
+\begin{equation}
+	\left\{	
+		\begin{aligned}
+			&LsI(s)+RI(s)=U(s)-K_es\Theta(s)\\
+			&J_ms^2\Theta(s) + K_fs\Theta(s) = K_mI(s) - M_l(s)
+		\end{aligned}
+	\right.
+\end{equation}
+\begin{equation}
+	\left\{	
+		\begin{aligned}
+			&(Ls+R)I(s)=U(s)-K_es\Theta(s)\\
+			&(J_ms + K_f)s\Theta(s) = K_mI(s) - M_l(s)
+		\end{aligned}
+	\right.
+\end{equation}
+\begin{equation}
+	\left\{	
+		\begin{aligned}
+			&I(s)=\frac{U(s)-K_es\Theta(s)}{Ls+R}\\
+			&(J_ms + K_f)s\Theta(s) = K_mI(s) - M_l(s)
+		\end{aligned}
+	\right.
+\end{equation}
+\begin{equation}
+	(Js+K_f+\frac{K_eK_m}{Ls+R})s\Theta(s)=\frac{K_mU(s)}{Ls+R}-M_l(s)
+\end{equation}
+\begin{equation}\label{lap}
+	\Theta(s) = \frac{K_mU(s)-M_l(s)(Ls+R)}{s((Ls+R)(J_ms+K_f)+K_eK_m)}
+\end{equation}
+Затем, из \eqref{lap} запишем передаточную функцию от входа $U(s)$ к выходу $\Theta(s)$ при $M_l(s) = 0$:
+\begin{equation}\label{OU}
+	\frac{\Theta(s)}{U(s)}=\frac{K_m}{s((Ls+R)(J_ms+K_f)+K_eK_m)}.
+\end{equation}
+Передаточная функция от $M_l(s)$ к $\Theta(s)$ при $U(s) = 0$: 
+\begin{equation}\label{OM}
+	\frac{\Theta(s)}{M_l(s)}=-\frac{Ls+R}{s((Ls+R)(J_ms+K_f)+K_eK_m)}.
+\end{equation}
+Разделим числитель и знаменатель передаточных функций \eqref{OU} и \eqref{OM} на $R$:
+\begin{equation}\label{OUR}
+	\frac{\Theta(s)}{U(s)}=\frac{\frac{K_m}{R}}{s((\frac{L}{R}s+1)(J_ms+K_f)+\frac{K_eK_m}{R})},
+\end{equation}
+\begin{equation}\label{OMR}
+	\frac{\Theta(s)}{M_l(s)}=-\frac{\frac{L}{R}s+1}{s((\frac{L}{R}s+1)(J_ms+K_f)+\frac{K_eK_m}{R})}.
+\end{equation}
+Допуская, что постоянная времени электрической компоненты существенно меньше, чем постоянная времени механической части:
+\begin{equation}
+	\frac{L}{R}\ll\frac{J}{k_f},
+\end{equation}
+что является типичным допущением для электромеханических частей, перепишем передаточные функции \eqref{OUR} и \eqref{OMR}:
+\begin{equation}\label{OUR2}
+	\frac{\Theta(s)}{U(s)}\approx\frac{\frac{K_m}{R}}{s(J_ms+K_f+\frac{K_eK_m}{R})},
+\end{equation}
+\begin{equation}\label{OMR2}
+	\frac{\Theta(s)}{M_l(s)}\approx-\frac{1}{s(J_ms+K_f+\frac{K_eK_m}{R})}.
+\end{equation}
+Введем новые обозначения и упростим передаточные функции \eqref{OUR2} и \eqref{OMR2}:
+\begin{equation}\label{OUR3}
+	\frac{\Theta(s)}{M_u(s)}\approx\frac{1}{s(J_ms+K)},
+\end{equation}
+\begin{equation}\label{OMR3}
+	\frac{\Theta(s)}{M_l(s)}\approx-\frac{1}{s(J_ms+K)}.
+\end{equation}
+где $M_u(s)= \frac{K_m}{R}U(s)$, $K=K_f+\frac{K_eK_m}{R}$.
+Комбинируя передаточные функции \eqref{OUR3} и \eqref{OMR3}, при $U(s)\neq0$ и $M_l(s)\neq0$ получим:
+\begin{equation}\label{pfunction}
+	\Theta(s)=\frac{1}{s(J_ms+K)}(M_u(s)-M_l(s))=P(s)(M_u(s)-M_l(s)).
+\end{equation}
+
+Таким образом, мы получили математическую модель вращательного сочленения в виде передаточной функции $P(s)$. Из этой функции можно получить дифференциальное уравнение системы. Для этого разделим обе части \eqref{pfunction} на $P(s)$:
+\begin{equation}
+	J_ms^2\Theta(s)+Ks\Theta=M_u(s)-M_l(s),
+\end{equation}
+осуществим обратное преобразование Лапласа:
+\begin{equation}
+	J_m\ddot{\theta}(t)+K\dot{\theta}(t)=\mu_u(t)-\mu_l(t),
+\end{equation}
+разделим на $J_m$ и вернем старые обозначения:
+\begin{equation}\label{dif}
+	\ddot{\theta}(t)+(\frac{K_f}{J_m}+\frac{K_eK_m}{J_mR})\dot{\theta}(t)=\frac{K_m}{J_mR}u(t)-\frac{\mu_l(t)}{J_m}.
+\end{equation}
